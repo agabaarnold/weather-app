@@ -48,7 +48,7 @@ function Home() {
 
     return (
         <>
-            <div className="flex w-full flex-col gap-8 lg:w-[cal(100dvw-var(--sidebar-width))]">
+            <div className="flex w-full flex-col gap-8 p-8 lg:w-[cal(100dvw-var(--sidebar-width))]">
                 <div className="flex gap-8">
                     <div className="flex gap-4">
                         <h1 className="text-2xl font-semibold">Location</h1>
@@ -67,7 +67,7 @@ function Home() {
                     </div>
 
                     <Button
-                        className="2xl:hidden"
+                        className={`${isSidePanelOpen && "hidden"}`}
                         onClick={() => setIsSidePanelOpen(true)}
                         variant="outline"
                     >
@@ -75,31 +75,40 @@ function Home() {
                     </Button>
                 </div>
 
-                <div className="relative">
-                    <Map
-                        coords={coords}
-                        onMapClick={onMapClick}
-                        mapType={mapType}
-                    />
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="relative col-span-1 md:col-span-2">
+                        <Map
+                            coords={coords}
+                            onMapClick={onMapClick}
+                            mapType={mapType}
+                        />
+                        <MapLegend mapType={mapType} />
+                    </div>
 
-                    <MapLegend mapType={mapType} />
+                    <div className="col-span-1">
+                        <Suspense fallback={<CurrentSkeleton />}>
+                            <CurrentWeather coords={coords} />
+                        </Suspense>
+                    </div>
+
+                    <div className="col-span-1">
+                        <Suspense fallback={<DailySkeleton />}>
+                            <DailyForecast coords={coords} />
+                        </Suspense>
+                    </div>
+
+                    <div className="col-span-1 md:col-span-2">
+                        <Suspense fallback={<HourlySkeleton />}>
+                            <HourlyForecast coords={coords} />
+                        </Suspense>
+                    </div>
+
+                    <div className="col-span-1 md:col-span-2">
+                        <Suspense fallback={<AdditionalSkeleton />}>
+                            <AdditionalInfo coords={coords} />
+                        </Suspense>
+                    </div>
                 </div>
-
-                <Suspense fallback={<CurrentSkeleton />}>
-                    <CurrentWeather coords={coords} />
-                </Suspense>
-
-                <Suspense fallback={<HourlySkeleton />}>
-                    <HourlyForecast coords={coords} />
-                </Suspense>
-
-                <Suspense fallback={<DailySkeleton />}>
-                    <DailyForecast coords={coords} />
-                </Suspense>
-
-                <Suspense fallback={<AdditionalSkeleton />}>
-                    <AdditionalInfo coords={coords} />
-                </Suspense>
             </div>
 
             <SidePanel

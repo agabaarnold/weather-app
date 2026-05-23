@@ -19,6 +19,7 @@ const CurrentWeather = ({ coords }: Props) => {
     return (
         <Card
             title="Current Weather"
+            className="md:pb-11"
             childrenClassName="flex flex-col items-center gap-6"
         >
             <div className="flex flex-col items-center gap-2">
