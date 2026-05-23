@@ -30,11 +30,11 @@ const SidePanel = (props: Props) => {
     return (
         <div
             className={clsx(
-                "bg-sidebar fixed top-0 right-0 z-10001 h-screen w-(--sidebar-width) overflow-y-scroll px-4 py-8 shadow-md transition-transform duration-300 ease-in-out",
+                "bg-sidebar fixed top-0 right-0 z-10001 h-screen w-(--sidebar-width) overflow-y-scroll px-4 py-8 shadow-md transition-transform duration-300 ease-in-out 2xl:translate-x-0!",
                 isSidePanelOpen ? "translate-x-0" : "translate-x-full"
             )}
         >
-            <Button onClick={() => setIsSidePanelOpen(false)} variant="outline">
+            <Button className="2xl:hidden" onClick={() => setIsSidePanelOpen(false)} variant="outline">
                 <ChevronLeft className="size-4" />
             </Button>
 

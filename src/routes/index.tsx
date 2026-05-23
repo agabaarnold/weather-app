@@ -25,7 +25,7 @@ function Home() {
     const [coordinates, setCoords] = useState<Coords>({ lat: 1, lon: 32 });
     const [location, setLocation] = useState("Kampala");
     const [mapType, setMapType] = useState("clouds_new");
-    const [isSidePanelOpen, setIsSidePanelOpen] = useState(true);
+    const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
     const { data: geoCodeData } = useQuery({
         queryFn: () => getGeoCode({ location }),
@@ -47,7 +47,7 @@ function Home() {
 
     return (
         <>
-            <div className="flex flex-col gap-8">
+            <div className="flex w-full flex-col gap-8 lg:w-[cal(100dvw-var(--sidebar-width))]">
                 <div className="flex gap-8">
                     <div className="flex gap-4">
                         <h1 className="text-2xl font-semibold">Location</h1>
@@ -65,7 +65,7 @@ function Home() {
                         />
                     </div>
 
-                    <Button
+                    <Button className="2xl:hidden"
                         onClick={() => setIsSidePanelOpen(true)}
                         variant="outline"
                     >
