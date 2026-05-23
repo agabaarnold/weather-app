@@ -19,7 +19,7 @@ const MapTypeDropdown = ({ mapType, setMapType }: Props) => (
             <SelectValue placeholder="Theme" />
         </SelectTrigger>
 
-        <SelectContent className="z-1001">
+        <SelectContent>
             {types.map((city) => (
                 <SelectItem className="capitalize" key={city} value={city}>
                     {city.split("_")[0]}

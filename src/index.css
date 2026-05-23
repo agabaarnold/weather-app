@@ -131,8 +131,10 @@
 }
 
 @layer base {
-    [data-base-ui-portal] {
-        z-index: 10000 !important;
+    /* Override Leaflet's z-index ceiling for Base UI floating elements */
+    [data-base-ui-portal],
+    .leaflet-pane ~ * {
+        z-index: 10000;
     }
 }
 

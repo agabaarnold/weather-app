@@ -34,7 +34,11 @@ const SidePanel = (props: Props) => {
                 isSidePanelOpen ? "translate-x-0" : "translate-x-full"
             )}
         >
-            <Button className="2xl:hidden" onClick={() => setIsSidePanelOpen(false)} variant="outline">
+            <Button
+                className="2xl:hidden"
+                onClick={() => setIsSidePanelOpen(false)}
+                variant="outline"
+            >
                 <ChevronLeft className="size-4" />
             </Button>
 
@@ -68,7 +72,7 @@ function AirPollution({ coords }: Props) {
                         }
                     />
 
-                    <TooltipContent className="z-2000">
+                    <TooltipContent>
                         <p className="max-w-xs">
                             Air Quality Index. Possible values: 1, 2, 3, 4, 5.
                             Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5

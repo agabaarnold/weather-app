@@ -19,7 +19,7 @@ const LocationDropdown = ({ location, setLocation }: Props) => (
             <SelectValue placeholder="Theme" />
         </SelectTrigger>
 
-        <SelectContent className="z-1001">
+        <SelectContent>
             {location === "custom" && (
                 <SelectItem value="custom">Custom</SelectItem>
             )}
