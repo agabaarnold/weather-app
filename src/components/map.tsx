@@ -6,8 +6,6 @@ import "leaflet/dist/leaflet.css";
 
 import type { Coords } from "#/types.ts";
 
-import MapLegend from "./map-legend";
-
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface Props {
@@ -26,17 +24,14 @@ const Map = ({ coords, onMapClick, mapType }: Props) => {
             zoom={5}
             style={{ height: "500px", width: "100%" }}
         >
+            <MapClick onMapClick={onMapClick} coords={coords} />
+
             <MapTileLayer />
 
             <TileLayer
                 opacity={0.7}
                 url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
             />
-
-            <div className="relative">
-                <MapClick onMapClick={onMapClick} coords={coords} />
-                <MapLegend mapType={mapType} />
-            </div>
 
             <Marker position={[lat, lon]}>
                 <Popup>
