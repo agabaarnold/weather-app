@@ -18,7 +18,13 @@ export async function getWeather({
     });
     return OneCallResponseSchema.parse(res.data);
 }
-export async function getGeoCode(location: string, limit = 1) {
+
+interface GetGeoCodeParams {
+    location: string;
+    limit?: number;
+}
+
+export async function getGeoCode({ location, limit = 1 }: GetGeoCodeParams) {
     const res = await geoApi.get("/direct", {
         params: { limit, q: location },
     });

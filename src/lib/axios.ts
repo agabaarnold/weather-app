@@ -15,7 +15,7 @@ const geoApi = create({
     baseURL: import.meta.env.VITE_GEO_API_URL,
     headers: { "Content-Type": "application/json" },
     params: {
-        appid: import.meta.env.VITE_GEO_API_KEY,
+        appid: import.meta.env.VITE_API_KEY,
     },
     timeout: 10_000,
 });

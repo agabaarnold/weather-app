@@ -1,29 +1,42 @@
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import { useEffect } from "react";
+
+import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 import type { Coords } from "#/types.ts";
 
-import "leaflet/dist/leaflet.css";
+import MapLegend from "./map-legend";
+
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface Props {
     coords: Coords;
     onMapClick: (lat: number, lon: number) => void;
+    mapType: string;
 }
 
-const Map = ({ coords, onMapClick }: Props) => {
+const Map = ({ coords, onMapClick, mapType }: Props) => {
     const { lat, lon } = coords;
 
     return (
         <MapContainer
             center={[lat, lon]}
+            key={`map-${coords.lat}-${coords.lon}`}
             zoom={5}
             style={{ height: "500px", width: "100%" }}
         >
+            <MapTileLayer />
+
             <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                opacity={0.7}
+                url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
             />
 
-            <MapClick onMapClick={onMapClick} />
+            <div className="relative">
+                <MapClick onMapClick={onMapClick} coords={coords} />
+                <MapLegend mapType={mapType} />
+            </div>
 
             <Marker position={[lat, lon]}>
                 <Popup>
@@ -35,17 +48,39 @@ const Map = ({ coords, onMapClick }: Props) => {
 };
 
 function MapClick({
+    coords,
     onMapClick,
 }: {
+    coords: Coords;
     onMapClick: (lat: number, lon: number) => void;
 }) {
     const map = useMap();
+    map.panTo([coords.lat, coords.lon]);
 
     map.on("click", (e) => {
         const { lat, lng } = e.latlng;
-        map.panTo([lat, lng]);
         onMapClick(lat, lng);
     });
+
+    return null;
+}
+
+const MAP_TILER_API_KEY = import.meta.env.VITE_MAP_TILER_API_KEY;
+
+function MapTileLayer() {
+    const map = useMap();
+
+    useEffect(() => {
+        const tileLayer = new MaptilerLayer({
+            apiKey: MAP_TILER_API_KEY,
+            style: "basic-dark",
+        });
+        tileLayer.addTo(map);
+
+        return () => {
+            map.removeLayer(tileLayer);
+        };
+    }, [map]);
 
     return null;
 }
