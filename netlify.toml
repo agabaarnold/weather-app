@@ -1,0 +1,6 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VITE_API_KEY,VITE_MAP_TILER_API_KEY,VITE_API_URL,VITE_GEO_API_URL"
