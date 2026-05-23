@@ -1,4 +1,5 @@
-import { geoApi, weatherApi } from "#/lib/axios.ts";
+import { airPollutionApi, geoApi, weatherApi } from "#/lib/axios.ts";
+import { AirPollutionResponseSchema } from "#/schemas/air-pollution.ts";
 import { DirectGeocodingResponseSchema } from "#/schemas/geocoding.ts";
 import { OneCallResponseSchema } from "#/schemas/weather.ts";
 
@@ -29,4 +30,16 @@ export async function getGeoCode({ location, limit = 1 }: GetGeoCodeParams) {
         params: { limit, q: location },
     });
     return DirectGeocodingResponseSchema.parse(res.data);
+}
+
+interface GetAirPollutionParams {
+    lat: number;
+    lon: number;
+}
+
+export async function getAirPollution({ lat, lon }: GetAirPollutionParams) {
+    const res = await airPollutionApi.get("/air_pollution", {
+        params: { lat, lon },
+    });
+    return AirPollutionResponseSchema.parse(res.data);
 }

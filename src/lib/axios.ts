@@ -20,4 +20,13 @@ const geoApi = create({
     timeout: 10_000,
 });
 
-export { geoApi, weatherApi };
+const airPollutionApi = create({
+    baseURL: import.meta.env.VITE_AIR_POLLUTION_API_URL,
+    headers: { "Content-Type": "application/json" },
+    params: {
+        appid: import.meta.env.VITE_API_KEY,
+    },
+    timeout: 10_000,
+});
+
+export { airPollutionApi, geoApi, weatherApi };

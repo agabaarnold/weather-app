@@ -9,6 +9,7 @@ import HourlyForecast from "#/components/cards/hourly-forecast.tsx";
 import LocationDropdown from "#/components/dropdowns/location-dropdown.tsx";
 import MapTypeDropdown from "#/components/dropdowns/map-type-dropdown.tsx";
 import Map from "#/components/map.tsx";
+import SidePanel from "#/components/side-panel.tsx";
 import AdditionalSkeleton from "#/components/skeletons/additional-skeleton.tsx";
 import CurrentSkeleton from "#/components/skeletons/current-skeleton.tsx";
 import DailySkeleton from "#/components/skeletons/daily-skeleton.tsx";
@@ -42,44 +43,44 @@ function Home() {
               };
 
     return (
-        <div className="flex flex-col gap-8">
-            <div className="flex gap-8">
-                <div className="flex gap-4">
-                    <h1 className="text-2xl font-semibold">Location</h1>
-
-                    <LocationDropdown
-                        location={location}
-                        setLocation={setLocation}
-                    />
+        <>
+            <div className="flex flex-col gap-8">
+                <div className="flex gap-8">
+                    <div className="flex gap-4">
+                        <h1 className="text-2xl font-semibold">Location</h1>
+                        <LocationDropdown
+                            location={location}
+                            setLocation={setLocation}
+                        />
+                    </div>
+                    <div className="flex gap-4">
+                        <h1 className="text-2xl font-semibold">Map type</h1>
+                        <MapTypeDropdown
+                            mapType={mapType}
+                            setMapType={setMapType}
+                        />
+                    </div>
                 </div>
-
-                <div className="flex gap-4">
-                    <h1 className="text-2xl font-semibold">Map type</h1>
-
-                    <MapTypeDropdown
-                        mapType={mapType}
-                        setMapType={setMapType}
-                    />
-                </div>
+                <Map
+                    coords={coords}
+                    onMapClick={onMapClick}
+                    mapType={mapType}
+                />
+                <Suspense fallback={<CurrentSkeleton />}>
+                    <CurrentWeather coords={coords} />
+                </Suspense>
+                <Suspense fallback={<HourlySkeleton />}>
+                    <HourlyForecast coords={coords} />
+                </Suspense>
+                <Suspense fallback={<DailySkeleton />}>
+                    <DailyForecast coords={coords} />
+                </Suspense>
+                <Suspense fallback={<AdditionalSkeleton />}>
+                    <AdditionalInfo coords={coords} />
+                </Suspense>
             </div>
 
-            <Map coords={coords} onMapClick={onMapClick} mapType={mapType} />
-
-            <Suspense fallback={<CurrentSkeleton />}>
-                <CurrentWeather coords={coords} />
-            </Suspense>
-
-            <Suspense fallback={<HourlySkeleton />}>
-                <HourlyForecast coords={coords} />
-            </Suspense>
-
-            <Suspense fallback={<DailySkeleton />}>
-                <DailyForecast coords={coords} />
-            </Suspense>
-
-            <Suspense fallback={<AdditionalSkeleton />}>
-                <AdditionalInfo coords={coords} />
-            </Suspense>
-        </div>
+            <SidePanel coords={coords} />
+        </>
     );
 }
