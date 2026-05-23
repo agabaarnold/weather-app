@@ -14,7 +14,7 @@ interface Props {
 }
 
 const MapTypeDropdown = ({ mapType, setMapType }: Props) => (
-    <Select onValueChange={(value) => setMapType(value)} value={mapType}>
+    <Select onValueChange={(value) => setMapType(value ?? "clouds_new")} value={mapType}>
         <SelectTrigger className="w-45">
             <SelectValue placeholder="Theme" />
         </SelectTrigger>

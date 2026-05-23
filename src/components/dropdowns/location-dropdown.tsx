@@ -14,7 +14,7 @@ interface Props {
 }
 
 const LocationDropdown = ({ location, setLocation }: Props) => (
-    <Select onValueChange={(value) => setLocation(value)} value={location}>
+    <Select onValueChange={(value) => setLocation(value ?? "custom")} value={location}>
         <SelectTrigger className="w-45">
             <SelectValue placeholder="Theme" />
         </SelectTrigger>
