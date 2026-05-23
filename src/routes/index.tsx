@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { Menu } from "lucide-react";
 import { Suspense, useState } from "react";
 
 import AdditionalInfo from "#/components/cards/additional-info.tsx";
@@ -14,6 +15,7 @@ import AdditionalSkeleton from "#/components/skeletons/additional-skeleton.tsx";
 import CurrentSkeleton from "#/components/skeletons/current-skeleton.tsx";
 import DailySkeleton from "#/components/skeletons/daily-skeleton.tsx";
 import HourlySkeleton from "#/components/skeletons/hourly-skeleton.tsx";
+import { Button } from "#/components/ui/button.tsx";
 import { getGeoCode } from "#/data/api.ts";
 import type { Coords } from "#/types.ts";
 
@@ -23,6 +25,7 @@ function Home() {
     const [coordinates, setCoords] = useState<Coords>({ lat: 1, lon: 32 });
     const [location, setLocation] = useState("Kampala");
     const [mapType, setMapType] = useState("clouds_new");
+    const [isSidePanelOpen, setIsSidePanelOpen] = useState(true);
 
     const { data: geoCodeData } = useQuery({
         queryFn: () => getGeoCode({ location }),
@@ -53,6 +56,7 @@ function Home() {
                             setLocation={setLocation}
                         />
                     </div>
+
                     <div className="flex gap-4">
                         <h1 className="text-2xl font-semibold">Map type</h1>
                         <MapTypeDropdown
@@ -60,27 +64,43 @@ function Home() {
                             setMapType={setMapType}
                         />
                     </div>
+
+                    <Button
+                        onClick={() => setIsSidePanelOpen(true)}
+                        variant="outline"
+                    >
+                        <Menu className="size-4" />
+                    </Button>
                 </div>
+
                 <Map
                     coords={coords}
                     onMapClick={onMapClick}
                     mapType={mapType}
                 />
+
                 <Suspense fallback={<CurrentSkeleton />}>
                     <CurrentWeather coords={coords} />
                 </Suspense>
+
                 <Suspense fallback={<HourlySkeleton />}>
                     <HourlyForecast coords={coords} />
                 </Suspense>
+
                 <Suspense fallback={<DailySkeleton />}>
                     <DailyForecast coords={coords} />
                 </Suspense>
+
                 <Suspense fallback={<AdditionalSkeleton />}>
                     <AdditionalInfo coords={coords} />
                 </Suspense>
             </div>
 
-            <SidePanel coords={coords} />
+            <SidePanel
+                coords={coords}
+                isSidePanelOpen={isSidePanelOpen}
+                setIsSidePanelOpen={setIsSidePanelOpen}
+            />
         </>
     );
 }

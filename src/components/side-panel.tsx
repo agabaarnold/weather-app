@@ -1,7 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { Info } from "lucide-react";
+import { ChevronLeft, Info } from "lucide-react";
 import { Suspense } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 import {
     airQualityRanges,
@@ -18,15 +19,30 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface Props {
     coords: Coords;
+    isSidePanelOpen: boolean;
+    setIsSidePanelOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const SidePanel = (props: Props) => (
-    <div className="bg-sidebar fixed top-0 right-0 z-10001 h-screen w-90 overflow-y-scroll px-4 py-8 shadow-md">
-        <Suspense>
-            <AirPollution {...props} />
-        </Suspense>
-    </div>
-);
+const SidePanel = (props: Props) => {
+    const { isSidePanelOpen, setIsSidePanelOpen } = props;
+
+    return (
+        <div
+            className={clsx(
+                "bg-sidebar fixed top-0 right-0 z-10001 h-screen w-90 overflow-y-scroll px-4 py-8 shadow-md transition-transform duration-300 ease-in-out",
+                isSidePanelOpen ? "translate-x-0" : "translate-x-full"
+            )}
+        >
+            <Button onClick={() => setIsSidePanelOpen(false)} variant="outline">
+                <ChevronLeft className="size-4" />
+            </Button>
+
+            <Suspense>
+                <AirPollution {...props} />
+            </Suspense>
+        </div>
+    );
+};
 
 function AirPollution({ coords }: Props) {
     const { data } = useSuspenseQuery({
