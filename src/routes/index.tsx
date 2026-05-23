@@ -9,6 +9,7 @@ import DailyForecast from "#/components/cards/daily-forecast.tsx";
 import HourlyForecast from "#/components/cards/hourly-forecast.tsx";
 import LocationDropdown from "#/components/dropdowns/location-dropdown.tsx";
 import MapTypeDropdown from "#/components/dropdowns/map-type-dropdown.tsx";
+import MapLegend from "#/components/map-legend.tsx";
 import Map from "#/components/map.tsx";
 import SidePanel from "#/components/side-panel.tsx";
 import AdditionalSkeleton from "#/components/skeletons/additional-skeleton.tsx";
@@ -65,7 +66,8 @@ function Home() {
                         />
                     </div>
 
-                    <Button className="2xl:hidden"
+                    <Button
+                        className="2xl:hidden"
                         onClick={() => setIsSidePanelOpen(true)}
                         variant="outline"
                     >
@@ -73,11 +75,15 @@ function Home() {
                     </Button>
                 </div>
 
-                <Map
-                    coords={coords}
-                    onMapClick={onMapClick}
-                    mapType={mapType}
-                />
+                <div className="relative">
+                    <Map
+                        coords={coords}
+                        onMapClick={onMapClick}
+                        mapType={mapType}
+                    />
+
+                    <MapLegend mapType={mapType} />
+                </div>
 
                 <Suspense fallback={<CurrentSkeleton />}>
                     <CurrentWeather coords={coords} />
