@@ -130,6 +130,12 @@
     }
 }
 
+@layer base {
+    [data-base-ui-portal] {
+        z-index: 10000 !important;
+    }
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;

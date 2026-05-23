@@ -24,19 +24,14 @@ const Map = ({ coords, onMapClick, mapType }: Props) => {
             zoom={5}
             style={{ height: "500px", width: "100%" }}
         >
-            <MapClick onMapClick={onMapClick} coords={coords} />
-
             <MapTileLayer />
-
             <TileLayer
                 opacity={0.7}
                 url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
             />
-
+            <MapClick onMapClick={onMapClick} coords={coords} />
             <Marker position={[lat, lon]}>
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
+                <Popup>A pretty CSS3 popup. <br /> Easily customizable.</Popup>
             </Marker>
         </MapContainer>
     );
