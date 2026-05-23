@@ -48,10 +48,10 @@ function Home() {
 
     return (
         <>
-            <div className="flex w-full flex-col gap-8 p-8 lg:w-[cal(100dvw-var(--sidebar-width))]">
+            <div className="flex w-full flex-col gap-8 p-8 lg:w-[cal(100dvw-var(--sidebar-width))] 2xl:h-screen">
                 <div className="flex gap-8">
                     <div className="flex gap-4">
-                        <h1 className="text-2xl font-semibold">Location</h1>
+                        <h1 className="text-2xl font-semibold">Location:</h1>
                         <LocationDropdown
                             location={location}
                             setLocation={setLocation}
@@ -59,7 +59,7 @@ function Home() {
                     </div>
 
                     <div className="flex gap-4">
-                        <h1 className="text-2xl font-semibold">Map type</h1>
+                        <h1 className="text-2xl font-semibold">Map type:</h1>
                         <MapTypeDropdown
                             mapType={mapType}
                             setMapType={setMapType}
@@ -75,8 +75,8 @@ function Home() {
                     </Button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="relative col-span-1 md:col-span-2">
+                <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-rows-4">
+                    <div className="relative order-1 col-span-1 h-120 md:col-span-2 2xl:col-span-4 2xl:row-span-2 2xl:h-auto">
                         <Map
                             coords={coords}
                             onMapClick={onMapClick}
@@ -85,25 +85,25 @@ function Home() {
                         <MapLegend mapType={mapType} />
                     </div>
 
-                    <div className="col-span-1">
+                    <div className="order-2 col-span-1 2xl:row-span-2">
                         <Suspense fallback={<CurrentSkeleton />}>
                             <CurrentWeather coords={coords} />
                         </Suspense>
                     </div>
 
-                    <div className="col-span-1">
+                    <div className="order-3 col-span-1 2xl:order-4 2xl:row-span-2">
                         <Suspense fallback={<DailySkeleton />}>
                             <DailyForecast coords={coords} />
                         </Suspense>
                     </div>
 
-                    <div className="col-span-1 md:col-span-2">
+                    <div className="order-4 col-span-1 md:col-span-2 2xl:order-3 2xl:row-span-1">
                         <Suspense fallback={<HourlySkeleton />}>
                             <HourlyForecast coords={coords} />
                         </Suspense>
                     </div>
 
-                    <div className="col-span-1 md:col-span-2">
+                    <div className="order-5 col-span-1 md:col-span-2 2xl:row-span-1">
                         <Suspense fallback={<AdditionalSkeleton />}>
                             <AdditionalInfo coords={coords} />
                         </Suspense>

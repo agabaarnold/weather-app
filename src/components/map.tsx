@@ -22,7 +22,7 @@ const Map = ({ coords, onMapClick, mapType }: Props) => {
             center={[lat, lon]}
             key={`map-${coords.lat}-${coords.lon}`}
             zoom={5}
-            style={{ height: "500px", width: "100%" }}
+            style={{ height: "100%", width: "100%" }}
         >
             <MapTileLayer />
             <TileLayer
