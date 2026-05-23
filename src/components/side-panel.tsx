@@ -30,7 +30,7 @@ const SidePanel = (props: Props) => {
     return (
         <div
             className={clsx(
-                "bg-sidebar fixed top-0 right-0 z-10001 h-screen w-90 overflow-y-scroll px-4 py-8 shadow-md transition-transform duration-300 ease-in-out",
+                "bg-sidebar fixed top-0 right-0 z-10001 h-screen w-(--sidebar-width) overflow-y-scroll px-4 py-8 shadow-md transition-transform duration-300 ease-in-out",
                 isSidePanelOpen ? "translate-x-0" : "translate-x-full"
             )}
         >
