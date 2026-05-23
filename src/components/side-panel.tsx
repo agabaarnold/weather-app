@@ -13,6 +13,7 @@ import { getAirPollution } from "#/data/api.ts";
 import type { Coords } from "#/types.ts";
 
 import Card from "./cards/card";
+import SidePanelSkeleton from "./skeletons/side-panel-skeleton";
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -37,7 +38,7 @@ const SidePanel = (props: Props) => {
                 <ChevronLeft className="size-4" />
             </Button>
 
-            <Suspense>
+            <Suspense fallback={<SidePanelSkeleton />}>
                 <AirPollution {...props} />
             </Suspense>
         </div>
